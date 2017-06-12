@@ -8,14 +8,17 @@ public class Button_Details : MonoBehaviour {
     public string currentWord, scrambledWord;
     public bool scramble, isTranslating;
     static bool weAreTranslating, clickedWasRight, addedACharacter, removedACharacter;
-    public static string currentScrambleWord, tempTranslation, currentCharacter;
+    public static string currentScrambleWord, tempTranslation, currentCharacter, cheatWord;
     public static GameObject currentButton, oldButton;
-    public static int currentWordCounter, oldWordCounter, currentLetter, tempCounter;
+    public static int currentWordCounter, oldWordCounter, currentLetter, tempCounter, totalScrambledWords;
     public GameObject panel;
+    Reveal_Cheat cheatComponent;
 
     
 	// Use this for initialization
 	void Start () {
+        cheatComponent = FindObjectOfType<Reveal_Cheat>();
+        cheatWord = "";
         currentScrambleWord = "";
         currentCharacter = "";
         currentLetter = 0;
@@ -28,14 +31,17 @@ public class Button_Details : MonoBehaviour {
                 {
                     scrambledWord += Translation.scrambledLetters[Random.Range(0, Translation.scrambledLetters.Length)];
                 }
+                totalScrambledWords += 1;
                 //Make sure to set the scrambled word to the text object within the Button.
                 //break out of the for loop since we got a hit with the translation thing
                 scramble = true;
                 GetComponentInChildren<Text>().text = scrambledWord;
                 GetComponentInChildren<Text>().color = Color.red;
+                cheatComponent.scrambledList(currentWord);
                 break;
             }
         }
+        Debug.Log("The total number of scrambled words in this puzzle is: " + totalScrambledWords);
     }
 	
 	// Update is called once per frame
@@ -57,6 +63,13 @@ public class Button_Details : MonoBehaviour {
                 break;
             }
         }*/
+        if(scramble && currentWord.Trim().Equals(cheatWord.Trim()))
+        {
+            scramble = false;
+            GetComponentInChildren<Text>().text = currentWord;
+            GetComponentInChildren<Text>().color = Color.green;
+
+        }
         if (clickedWasRight && scramble)
         {
             Debug.Log(oldWordCounter) ;
