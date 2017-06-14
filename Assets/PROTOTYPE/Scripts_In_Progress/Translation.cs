@@ -9,11 +9,14 @@ public class Translation : MonoBehaviour {
     public GameObject[] testButtons;
     public string[] buttonWords;
     public static string[] keyWords, scrambledLetters;
+    public static bool[] translated;
     public TextAsset buttonWordTextFile, keyWordsTextFile, scrambledLettersTextFiles;
     public GameObject panel;
     float panelWidth, panelHeight, panelStartPosX, panelStartPosY, maxWidth, currentWidth, typeSpeed;
     public Vector2 WordOffset;
     bool once, isTyping, coroutineIsHappening;
+    public string thought;
+
 	// Use this for initialization
 	void Start () {
         panelWidth = panel.GetComponent<RectTransform>().rect.width;
@@ -28,10 +31,15 @@ public class Translation : MonoBehaviour {
             buttonWords = (buttonWordTextFile.text.Split(' '));
             testButtons = new GameObject[buttonWords.Length];
         }
+        //CURRENTLY THESE WILL ALL GET RESET WHEN ENTERING A NEW SCENE
         if(keyWordsTextFile != null)
         {
             keyWords = keyWordsTextFile.text.Split(' ');
         }
+        /*for( int i = 0; i < keyWords.Length; i++)
+        {
+            translated[i] = false;
+        }*/
         if(scrambledLettersTextFiles != null)
         {
             scrambledLetters = scrambledLettersTextFiles.text.Split(' ');
@@ -53,6 +61,14 @@ public class Translation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (!thought.Trim().Equals(MANAGER_Translator.currentThought.Trim()))
+        {
+            for( int i = 0; i < testButtons.Length; i++)
+            {
+                testButtons[i].SetActive(false);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -78,6 +94,7 @@ public class Translation : MonoBehaviour {
                     
                     theTestButton.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(panelStartPosX + WordOffset.x, panelStartPosY + WordOffset.y);
                     theTestButton.GetComponent<Button_Details>().panel = this.gameObject;
+                    //theTestButton.transform.parent = this.gameObject.transform;
                 }
                 else
                 {
@@ -169,6 +186,17 @@ public class Translation : MonoBehaviour {
             }
         }
         return counter;
+    }
+    public static void wasTranslated(string word)
+    {
+        for (int i = 0; i < keyWords.Length; i++)
+        {
+            if (word.Trim().Equals(keyWords[i].Trim()))
+            {
+                translated[i] = true;
+                break;
+            }
+        }
     }
         
  }
