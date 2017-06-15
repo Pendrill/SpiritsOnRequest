@@ -14,7 +14,7 @@ public class Translation : MonoBehaviour {
     public GameObject panel;
     float panelWidth, panelHeight, panelStartPosX, panelStartPosY, maxWidth, currentWidth, typeSpeed;
     public Vector2 WordOffset;
-    bool once, isTyping, coroutineIsHappening;
+    bool once, isTyping, coroutineIsHappening, reShowWordsOnce;
     public string thought;
 
 	// Use this for initialization
@@ -68,6 +68,16 @@ public class Translation : MonoBehaviour {
             {
                 testButtons[i].SetActive(false);
             }
+            reShowWordsOnce = false;
+        }
+        else if(!reShowWordsOnce)
+        {
+            for (int i = 0; i < testButtons.Length; i++)
+            {
+                testButtons[i].SetActive(true);
+            }
+            //Debug.Log("How many times is this getting accessed");
+            reShowWordsOnce = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

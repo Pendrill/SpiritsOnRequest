@@ -41,7 +41,7 @@ public class Button_Details : MonoBehaviour {
                 break;
             }
         }
-        Debug.Log("The total number of scrambled words in this puzzle is: " + totalScrambledWords);
+       // Debug.Log("The total number of scrambled words in this puzzle is: " + totalScrambledWords);
     }
 	
 	// Update is called once per frame
