@@ -35,11 +35,13 @@ public class Translation : MonoBehaviour {
         if(keyWordsTextFile != null)
         {
             keyWords = keyWordsTextFile.text.Split(' ');
+            
         }
-        /*for( int i = 0; i < keyWords.Length; i++)
+        translated = new bool[keyWords.Length];
+        for( int i = 0; i < keyWords.Length; i++)
         {
             translated[i] = false;
-        }*/
+        }
         if(scrambledLettersTextFiles != null)
         {
             scrambledLetters = scrambledLettersTextFiles.text.Split(' ');
@@ -82,6 +84,22 @@ public class Translation : MonoBehaviour {
             {
                 //testButtons[i].SetActive(true);
                 testButtons[i].GetComponent<RectTransform>().anchoredPosition3D -= new Vector3(0, 10000, 0);
+                if (testButtons[i].GetComponent<Button_Details>().scramble)
+                {
+                    for(int j = 0; j < Translation.keyWords.Length; j++)
+                    {
+                        if (testButtons[i].GetComponent<Button_Details>().currentWord.Trim().Equals(Translation.keyWords[j]))
+                        {
+                            if (Translation.translated[j])
+                            {
+                                testButtons[i].GetComponent<Button_Details>().scramble = false;
+                                testButtons[i].GetComponentInChildren<Text>().text = testButtons[i].GetComponent<Button_Details>().currentWord;
+                                testButtons[i].GetComponentInChildren<Text>().color = Color.green;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             //Debug.Log("How many times is this getting accessed");
             reShowWordsOnce = true;

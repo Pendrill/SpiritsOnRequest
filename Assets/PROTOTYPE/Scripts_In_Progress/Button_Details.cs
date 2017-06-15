@@ -24,7 +24,7 @@ public class Button_Details : MonoBehaviour {
         currentLetter = 0;
         for (int i = 0; i < Translation.keyWords.Length; i++)
         {
-            if (currentWord.Trim().Equals(Translation.keyWords[i])) //&& !Translation.translated[i])
+            if (currentWord.Trim().Equals(Translation.keyWords[i]) && !Translation.translated[i])
             {
                 //Set the word in the button's text object as the scrambled word.
                 for (int j = 0; j < currentWord.Length; j++)
@@ -46,6 +46,10 @@ public class Button_Details : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (panel == null || !panel.GetComponent<Translation>().thought.Trim().Equals(MANAGER_Translator.currentThought.Trim()) )
+        {
+            return;
+        }
         //Go through the key words and check if the current button word is the same as that word
         /*for (int i = 0; i < Translation.keyWords.Length; i++)
         {
@@ -68,7 +72,7 @@ public class Button_Details : MonoBehaviour {
             scramble = false;
             GetComponentInChildren<Text>().text = currentWord;
             GetComponentInChildren<Text>().color = Color.green;
-            //Translation.wasTranslated(currentWord);
+            Translation.wasTranslated(currentWord);
 
         }
         if (clickedWasRight && scramble)
@@ -87,7 +91,7 @@ public class Button_Details : MonoBehaviour {
                 scramble = false;
                 GetComponentInChildren<Text>().text = currentWord;
                 GetComponentInChildren<Text>().color = Color.green;
-                //Translation.wasTranslated(currentWord);
+                Translation.wasTranslated(currentWord);
                 oldWordCounter -= 1;
 
             }
@@ -102,7 +106,7 @@ public class Button_Details : MonoBehaviour {
                 scramble = false;
                 GetComponentInChildren<Text>().text = currentWord;
                 GetComponentInChildren<Text>().color = Color.green;
-                //Translation.wasTranslated(currentWord);
+                Translation.wasTranslated(currentWord);
             }
             else
             {
@@ -176,7 +180,7 @@ public class Button_Details : MonoBehaviour {
                 currentButton.GetComponent<Button_Details>().scramble = false;
                 currentButton.GetComponentInChildren<Text>().text = currentWord;
                 currentButton.GetComponentInChildren<Text>().color = Color.green;
-                //Translation.wasTranslated(currentWord);
+                Translation.wasTranslated(currentWord);
                 oldButton = currentButton;
                 oldWordCounter = currentWordCounter;
                 clickedWasRight = true;
