@@ -14,7 +14,7 @@ public class Translation : MonoBehaviour {
     public GameObject panel;
     float panelWidth, panelHeight, panelStartPosX, panelStartPosY, maxWidth, currentWidth, typeSpeed;
     public Vector2 WordOffset;
-    bool once, isTyping, coroutineIsHappening, reShowWordsOnce;
+    bool once, isTyping, coroutineIsHappening, reShowWordsOnce, movedHappened;
     public string thought;
 
 	// Use this for initialization
@@ -62,23 +62,32 @@ public class Translation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (!thought.Trim().Equals(MANAGER_Translator.currentThought.Trim()))
+        if (!thought.Trim().Equals(MANAGER_Translator.currentThought.Trim())  )
         {
-            for( int i = 0; i < testButtons.Length; i++)
+            if (!movedHappened)
             {
-                testButtons[i].SetActive(false);
+                for (int i = 0; i < testButtons.Length; i++)
+                {
+                    //testButtons[i].SetActive(false);
+                    testButtons[i].GetComponent<RectTransform>().anchoredPosition3D += new Vector3(0, 10000, 0);
+                }
+                reShowWordsOnce = false;
+                movedHappened = true;
             }
-            reShowWordsOnce = false;
+            return;
         }
         else if(!reShowWordsOnce)
         {
             for (int i = 0; i < testButtons.Length; i++)
             {
-                testButtons[i].SetActive(true);
+                //testButtons[i].SetActive(true);
+                testButtons[i].GetComponent<RectTransform>().anchoredPosition3D -= new Vector3(0, 10000, 0);
             }
             //Debug.Log("How many times is this getting accessed");
             reShowWordsOnce = true;
+            movedHappened = false;
         }
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -133,6 +142,7 @@ public class Translation : MonoBehaviour {
             }
             once = false;
         }
+
     }
 
     public IEnumerator waitAFrame()
