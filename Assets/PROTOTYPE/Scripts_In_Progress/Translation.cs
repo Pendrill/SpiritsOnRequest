@@ -137,7 +137,7 @@ public class Translation : MonoBehaviour {
                 {
                     if (currentWidth + theTestButton.GetComponent<RectTransform>().rect.width > maxWidth)
                     {
-                        WordOffset.y -= 50;
+                        WordOffset.y -= 25;
                         StartCoroutine(typeWord(theTestButton, theTestButton, true));
                         //theTestButton.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(testButtons[0].GetComponent<RectTransform>().anchoredPosition3D.x, panelStartPosY + WordOffset.y) + new Vector3(theTestButton.GetComponent<RectTransform>().rect.width / 2, 0, 0) - new Vector3(testButtons[0].GetComponent<RectTransform>().rect.width / 2, 0, 0) ;
                         //go down one
