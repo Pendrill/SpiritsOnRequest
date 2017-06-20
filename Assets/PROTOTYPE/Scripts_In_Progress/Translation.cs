@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Translation : MonoBehaviour {
-    public GameObject theTestButton, buttonPrefab, tempButton, otherPanel_1, otherPanel_2;
+    public GameObject theTestButton, buttonPrefab, tempButton, otherPanel_1, otherPanel_2, otherPanel_3;
     public Transform canvas;
     public GameObject[] testButtons;
     public string[] buttonWords;
@@ -15,6 +15,7 @@ public class Translation : MonoBehaviour {
     float panelWidth, panelHeight, panelStartPosX, panelStartPosY, maxWidth, currentWidth, typeSpeed;
     public Vector2 WordOffset;
     bool once, isTyping, coroutineIsHappening, reShowWordsOnce, movedHappened;
+    public bool fourPanel;
     public string thought;
 
 	// Use this for initialization
@@ -221,6 +222,16 @@ public class Translation : MonoBehaviour {
             if (currentWord.Trim().Equals(otherPanel_2.GetComponent<Translation>().testButtons[i].GetComponent<Button_Details>().currentWord.Trim()))
             {
                 counter += 1;
+            }
+        }
+        if(fourPanel)
+        {
+            for (int i = 0; i < otherPanel_3.GetComponent<Translation>().testButtons.Length; i++)
+            {
+                if (currentWord.Trim().Equals(otherPanel_3.GetComponent<Translation>().testButtons[i].GetComponent<Button_Details>().currentWord.Trim()))
+                {
+                    counter += 1;
+                }
             }
         }
         return counter;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MANAGER_Translator : MonoBehaviour {
 
-    public static string currentThought = "Movies";
+    public static string currentThought = "New School";
     public static string Name;
     public Text thoughtDisplay;
     // Use this for initialization
